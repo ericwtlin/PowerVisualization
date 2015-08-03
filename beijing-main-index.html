@@ -1,95 +1,134 @@
-<html>
 
+<html>  
+  <head>  
+        <meta charset="utf-8">  
+        <title>Map</title>  
+  </head> 
+<style>
+	#map {
+		height: auto;
+		margin: 3px;
+		background-color: #FFE4C4;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 10px;
+	}
 
+	.overlay {
+	  fill: none;
+	  pointer-events: all;
+	}
+
+	#tooltip {
+			position: absolute;
+			width: 180px;
+			height: auto;
+			padding: 10px;
+			background-color: #F08080;
+			-webkit-border-radius: 10px;
+			-moz-border-radius: 10px;
+			border-radius: 10px;
+			-webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+			-moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+			box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+			pointer-events: none;
+		}
+		#tooltip.hidden {
+			display: none;
+		}
+		#tooltip p {
+			margin: 0;
+			font-family: sans-serif;
+			font-size: 16px;
+			line-height: 20px;
+		}
+</style>
 <body>
-<script src="http://127.0.0.1/libs/d3.v3.min.js" charset="utf-8"></script>
- 
-<script src="http://127.0.0.1/libs/topojson.v1.min.js"></script>
-<script type="text/javascript">
-	var width = 1200;
-	var height = 1200;
-	var svg = d3.select("body").append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .append("g")
-        .attr("transform", "translate(0,0)");
-	var projection = d3.geo.mercator()
-  		.center([116.2, 40.3])
-		//.center([115.4, 39.4])
-  		.scale(28000)
-  		.translate([width/2, height/2]);
+	
+	<div id="tooltip" class="hidden">
+			<p><strong>省份：</strong><span id="province">100</span></p>
+			<p><strong>年份：</strong><span id="year">100</span></p>
+			<p><strong>总和：</strong><span id="sum">100</span></p>
+			<p><strong>工业用电：</strong><span id="industry1">100</span></p>
+			<p><strong>家庭用电：</strong><span id="industry2">100</span></p>
+			<p><strong>其他：</strong><span id="industry3">100</span></p>
+	</div>
+<div id="map"></div>
 
-  	var path = d3.geo.path()
-  		.projection(projection);
+<script src="libs/d3.v3.min.js"></script>
+<!--<script src="libs/topojson.v1.min.js"></script>-->
+<script src="beijing-main-index/drawMap.js"></script>
+<script src="beijing-main-index/timeaxis.js"></script>
+<script src="beijing-main-index/pie.js"></script>
+
+
+<link rel="stylesheet" href="beijing-main-index/css/normalize.min.css" />
+<link rel="stylesheet" href="beijing-main-index/css/ion.rangeSlider.css" />
+<link rel="stylesheet" href="beijing-main-index/css/ion.rangeSlider.skinFlat.css" id="styleSrc"/>
+<script src="libs/jquery-1.11.3.min.js"></script>
+<script src="beijing-main-index/ion.rangeSlider-2.0.13.js"></script>
+<script src="beijing-main-index/rangeSlider.js"></script>
+
+<!--
+<div id="rangeSlider" style="padding-left:55px; margin-top:-110px; width:500px; font-size:12px;">
+	<input type="text" id="range_1" /> 
+	<div id="range_1"></div>
+</div>
+-->
+
+<script>
+	var totalmaxvalue=10000;
+	var totalminvalue=10;
+	var namelabeldy=50;
+	var namelabeldx=30;
+	var provinceDataYear;
+
+	var globalyear = 2004;
 	
 	
-	var color = d3.scale.category20();
-	var states = svg.append("svg:g")
-	    .attr("id", "states");
-	d3.json("map/beijing_csdn.mantou_topo.json", function(error, topology) {
-	    if (error)
-	      return console.error(error);
-
-	    states.selectAll("path")
-	      .data(topojson.feature(topology, topology.objects.beijing_csdn_mantou).features)
-	      .enter()
-	      .append("path")
-	      .attr("stroke","#000")//路径线颜色
-	      .attr("stroke-width",1)//路径线宽度
-	      .attr("fill", function(d,i){
-				return color(i);//color函数可根据数据设置每个州板块的颜色，示例中使用的是D3自带的颜色函数。
-	      		})
-	      .attr("d", path )
-	      .on("mouseover",function(d,i){//添加鼠标事件
-				d3.select(this)
-				  .attr("fill","yellow");
-	   			   })
-	      .on("mouseout",function(d,i){
-				d3.select(this)
-		 		 .attr("fill",color(i));
-	     		 });
-	  });
 	
-	/*
-	var circles = svg.append("svg:g")
-        .attr("id", "circles");
+	var timeheight = 80;
+	var width  = 1000;
+	var height = 500;
+	var background = "#D1EEEE";
+	var overColor = "#F08080";
 
-    var texts = svg.append("svg:g")
-        .attr("id", "texts");
+	var svg = d3.select("#map").append("svg")
+	    .attr("width", width)
+	    .attr("height", height + timeheight)
+	    .append("g")
+	    .attr("transform", "translate(0,0)");
 
-	d3.json("map/point_test.json", function(error, topology) {
-	    if (error)
-	      return console.error(error);
-        circles.selectAll("circle")
-	      	.data(topojson.feature(topology, topology.objects.beijing_point)
-					.features)
-            .enter()
-			.append("svg:circle")
-            .attr("cx", function(d){return projection([d.properties['LONGITUDE'],d.properties['LATITUDE']])[0];})//根据城市的经纬度投射确定圆点坐标
-            .attr("cy",function(d){return projection([d.properties['LONGITUDE'],d.properties['LATITUDE']])[1];})
-            .attr("r", 10)
-            .attr('fill','#29FF57');
+	//var beijingJsonPath = "map/beijing_csdn_mantou_topo.json";
+	//var beijingJsonPath = "map/beijing_csdn_mantou.json";
+	var beijingJsonPath = "beijing-main-index/beijing-map.json";
+	drawMap(beijingJsonPath, svg, 116.2, 40.3);
+	
 
-        texts.selectAll("text")
-	      	.data(topojson.feature(topology, topology.objects.beijing_point)
-					.features)
-            .enter()
-            .append("svg:text")
-            .text(function(d){return d.properties['NAME'];})
-            .attr("x", function(d){
-                return projection([ d.properties['LONGITUDE'],d.properties['LATITUDE']])[0];})
-            .attr("y",function(d){
-                return projection([d.properties['LONGITUDE'],d.properties['LATITUDE']])[1];
-            })
-            .attr('fill','#000')
-            .attr('font-size','9px');
 
-    });
-	*/
+	var nodes = [];
+	var provinceNodes = [];
+	var coutiesNodes = [];
+	var provinceId = "";
+	var coutiesId = "";
+	var textColor= "black";
+	
 
 </script>
-</body>
 
-
-
-</html>
+<script src="beijing-main-index/name.js"></script>
+<script>
+	//图的左上角标题
+	svg.append("rect").attr("id","name_show_button")
+			.attr({ x:namelabeldx-5, y:namelabeldy-22,rx:"8", ry:"6", width:"200", height:"28"})
+			.attr("fill","#EEEEEE")
+			.on("click",isNameShow);
+	svg.append("text").attr("id","name_show")
+		.attr("dx",namelabeldx).attr("dy",namelabeldy).attr("font-anchor","middle")
+		.text("点击 显示/隐藏 区域名称")
+			.on("click",isNameShow);;
+		
+	
+	</script>
+</body>  
+</html>  
