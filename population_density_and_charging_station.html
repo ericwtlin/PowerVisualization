@@ -7,8 +7,9 @@
 
 <body>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="main" style="height:1100px;width:1100px; float:left")></div>
-	<div style="float:left">
+    <div id="main" style="height:1100px;width:1100px; z-index:1;position:absolute;background-color:white;")></div>
+	<!--<div id="main" style="height:1100px;width:1100px; float:left")></div>-->
+	<div id="statistics" style="z-index:2;position:absolute;background-color:white;top:30px;display:none">
 			<p>当前选中的区域是:</p>
 			<textarea id="SelectedArea" readonly="readonly" rows=3 cols=30/> </textarea>
 			<p>该区域中的充电桩统计信息:</p>
@@ -23,7 +24,7 @@
 	
 
 	<script type="text/javascript">
-		//把这个放在body前面，因为在加载地图前，必须先把数据加载完成;也可以采用其他方法来控制加载数据必须先执行完
+		//加载json数据
 		var population_density_data, charging_stations_data, charging_stations_geoCoord, heat_data;
 		$.getJSON('population_density_and_charging_station/data.json',function(json){
 			population_density_data = json.data;
@@ -126,7 +127,7 @@
 								show: true,
 								x: 'right',
 								mapTypeControl: {
-									'china': true
+									'北京': true
 								}
 							},
 							series : [
@@ -207,30 +208,36 @@
 									str += p + ' ';
 								}
 							}
-							document.getElementById("SelectedArea").value = str;
-							//console.log(str);
-
-							//获取选中区域内的充电站信息
-							var count_A = 0;
-							var count_B = 0;
-							for(var i = 0; i < charging_stations_data.length; i ++){
-								if(selected[charging_stations_data[i].location]){
-									if(charging_stations_data[i].type == "A类"){
-										count_A ++;
-									}else if (charging_stations_data[i].type == "B类"){
-										count_B ++;
+							if(str != ""){
+								document.getElementById("statistics").style.display = "block";	//若有选中，则显示该统计信息的div
+								document.getElementById("SelectedArea").value = str;
+								//console.log(str);
+							
+								//获取选中区域内的充电站信息
+								var count_A = 0;
+								var count_B = 0;
+								for(var i = 0; i < charging_stations_data.length; i ++){
+									if(selected[charging_stations_data[i].location]){
+										if(charging_stations_data[i].type == "A类"){
+											count_A ++;
+										}else if (charging_stations_data[i].type == "B类"){
+											count_B ++;
+										}
 									}
 								}
+								/** 格式化输入字符串**/
+								//用法: "hello{0}".format('world')；返回'hello world'
+								String.prototype.format= function(){
+									var args = arguments;
+									return this.replace(/\{(\d+)\}/g,function(s,i){
+									return args[i];
+									});
+								}
+								document.getElementById("ChargingInfo").value = "A类充电站共有{0}个\nB类充电站共有{1}个".format(count_A, count_B);
+							}else{
+								document.getElementById("statistics").style.display = "none";	//若无选中，则隐藏该统计信息的DIV
+
 							}
-							/** 格式化输入字符串**/
-							//用法: "hello{0}".format('world')；返回'hello world'
-							String.prototype.format= function(){
-							   	var args = arguments;
-						    	return this.replace(/\{(\d+)\}/g,function(s,i){
-							 	return args[i];
-						   		});
-							}
-							document.getElementById("ChargingInfo").value = "A类充电站共有{0}个\nB类充电站共有{1}个".format(count_A, count_B);
 
 
 
