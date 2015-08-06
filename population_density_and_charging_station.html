@@ -5,13 +5,24 @@
     <title>人口密度与充电桩规划</title>
 </head>
 
+	<script type="text/javascript" src="libs/jquery-1.11.3.min.js"></script> 
+	<script type="text/javascript">
+		//把这个放在body前面，因为在加载地图前，必须先把数据加载完成;也可以采用其他方法来控制加载数据必须先执行完
+		var population_density_data, charging_stations_data, charging_stations_geoCoord, heat_data_preprocess;
+		$.getJSON('population_density_and_charging_station/data.json',function(json){
+			population_density_data = json.data;
+			charging_stations_data = json.charging_stations_info;
+			charging_stations_geoCoord = json.charging_stations_geoCoord;
+			heat_data_preprocess = json.heat_data_preprocess;
+			console.log("load json data finished");
+			});
+	</script>
 <body>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
     <div id="main" style="height:1100px;width:1100px"></div>
 	<!-- ECharts单文件引入 -->
     <script src="echarts-master/build/dist/echarts.js"></script>
 	<!--<script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>-->
-	<script type="text/javascript" src="libs/jquery-1.11.3.min.js"></script> 
 	<script type="text/javascript" src="libs/jquery.subscribe.js"></script>
 	
 	<!--百度地图API，用于查询地址对应的坐标-->
@@ -19,54 +30,39 @@
 	<script type="text/javascript" src="population_density_and_charging_station\GetCoordinateByLocationName.js"></script>
 	<script type="text/javascript" src="population_density_and_charging_station\GetCoordinateByLocationName.js"></script>
 
-	<script type="text/javascript">
-		console.log("123");
-    	
-		/*$(document).ready(function() {*/
-		function load_data(){
-				var population_density_data, charging_stations_data, charging_stations_geoCoord, location_data;
-				$.getJSON('population_density_and_charging_station/data.json',function(json){
-					population_density_data = json.data;
-					charging_stations_data = json.charging_stations_info;
-					charging_stations_geoCoord = json.charging_stations_geoCoord;
-					location_data = json.location_data;
-					console.log("load population_density_data finished");
-					});
-				
-				setTimeout(function(){
-				var heap_data = [];
-				for(var i = 0; i < population_density_data.length; i ++){
-					heap_data.push([location_data[i].x, location_data[i].y, population_density_data[i].value]);
-				}
-				
 
-				/*载入json数据结束后，通过百度地图API获取对应区域的坐标
-				因为提供的人口数据里区域的粒度肯定不会太小，而且肯定是行政区域，所以从“XX省XX市XX县XX镇”这样准确的地址就不会有坐标错误了
-				能够直接提供人口数据对应的坐标数据当然更好
-				*/
-				/*
-				setTimeout(function(){
-						var heatData = [];
-						for(var i = 0; i < population_density_data.length; i ++){
-							var poi = GetCoordinateByLocationName(population_density_data[i].name);
-							heatData.push([
-									poi.point.lng,	//logitude
-									poi.point.lat,	//latitude
-									population_density_data[i].value
-								]);	
-							}}, 1000);
-				*/
-				//setTimeout(function(){
-					console.log("load finished");
-					jQuery.publish("load_data_done");
-				}, 1000);
+	<script type="text/javascript">
+    	//处理得到热力数据
+		var heat_data = [];
+		for(var i = 0; i < heat_data_preprocess.length; i ++){
+			//for(var j = 0; j < 100; j ++){	//重复100遍，否则数量太少，显示不出效果
+				heat_data.push([heat_data_preprocess[i].x, heat_data_preprocess[i].y, heat_data_preprocess[i].value]);
+			//}
 		}
-		load_data();
+		
+
+		/*载入json数据结束后，通过百度地图API获取对应区域的坐标
+		因为提供的人口数据里区域的粒度肯定不会太小，而且肯定是行政区域，所以从“XX省XX市XX县XX镇”这样准确的地址就不会有坐标错误了
+		能够直接提供人口数据对应的坐标数据当然更好
+		*/
+		/*
+		setTimeout(function(){
+				var heatData = [];
+				for(var i = 0; i < population_density_data.length; i ++){
+					var poi = GetCoordinateByLocationName(population_density_data[i].name);
+					heatData.push([
+							poi.point.lng,	//logitude
+							poi.point.lat,	//latitude
+							population_density_data[i].value
+						]);	
+					}}, 1000);
+		*/
+		console.log("make heat data finished");
 
 	</script>
 	<script type="text/javascript">
 		//console.log(population_density_data);
-		setTimeout(function show_map(){	
+		//setTimeout(function show_map(){	
 				// 路径配置
 				require.config({
 					paths: {
@@ -99,7 +95,7 @@
 							tooltip : {
 								trigger: 'item',
 								formatter: function (params,ticket,callback) {
-									console.log(params);
+									//console.log(params);
 									
 									if(params[5].type == null || params[5].type == undefined){	//说明是地区区块
 										return params[5].name + "<br/>人口密度: " + params[5].value;
@@ -189,7 +185,7 @@
 									heatmap: {
 										blurSize: 30,
 										gradientColors: ['blue', 'cyan', 'lime', 'yellow', 'red'],
-										minAlpha: 0.05,
+										minAlpha: 0.1,
 										valueScale: 1,
 										opacity: 1,
 										data: heat_data
@@ -210,8 +206,8 @@
 					}
 				);
 		
-			jQuery.subscribe("load_data_done", show_map);
-		}, 3000);
+			//jQuery.subscribe("load_data_done", show_map);
+		//}, 3000);
     </script>
 	
 </body>
