@@ -7,7 +7,14 @@
 
 <body>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="main" style="height:1100px;width:1100px"></div>
+    <div id="main" style="height:1100px;width:1100px; float:left")></div>
+	<div style="float:left">
+			<p>当前选中的区域是:</p>
+			<textarea id="SelectedArea" readonly="readonly" rows=3 cols=30/> </textarea>
+			<p>该区域中的充电桩统计信息:</p>
+			<textarea id="ChargingInfo" readonly="readonly" rows=5 cols=30/></textarea>
+	</div>
+
 	<!-- ECharts单文件引入 -->
     <script src="echarts-master/build/dist/echarts.js"></script>
 	<!--<script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>-->
@@ -17,19 +24,19 @@
 
 	<script type="text/javascript">
 		//把这个放在body前面，因为在加载地图前，必须先把数据加载完成;也可以采用其他方法来控制加载数据必须先执行完
-		var population_density_data, charging_stations_data, charging_stations_geoCoord, heat_data_preprocess;
+		var population_density_data, charging_stations_data, charging_stations_geoCoord, heat_data;
 		$.getJSON('population_density_and_charging_station/data.json',function(json){
 			population_density_data = json.data;
 			charging_stations_data = json.charging_stations_info;
 			charging_stations_geoCoord = json.charging_stations_geoCoord;
-			heat_data= json.heat_data_preprocess;
+			heat_data= json.heat_data;
 			console.log("load json data finished");
 			});
 	</script>
 
 	<script type="text/javascript">
     	//处理得到热力数据
-		console.log("make heat data begin");
+		//console.log("make heat data begin");
 		//var heat_data = heat_data_preprocess;
 		/*
 		var heat_data = [];
@@ -40,23 +47,7 @@
 		}
 		*/
 
-		/*载入json数据结束后，通过百度地图API获取对应区域的坐标
-		因为提供的人口数据里区域的粒度肯定不会太小，而且肯定是行政区域，所以从“XX省XX市XX县XX镇”这样准确的地址就不会有坐标错误了
-		能够直接提供人口数据对应的坐标数据当然更好
-		*/
-		/*
-		setTimeout(function(){
-				var heatData = [];
-				for(var i = 0; i < population_density_data.length; i ++){
-					var poi = GetCoordinateByLocationName(population_density_data[i].name);
-					heatData.push([
-							poi.point.lng,	//logitude
-							poi.point.lat,	//latitude
-							population_density_data[i].value
-						]);	
-					}}, 1000);
-		*/
-		console.log("make heat data finished");
+		//console.log("make heat data finished");
 
 	</script>
 	<script type="text/javascript">
@@ -144,7 +135,7 @@
 									type: 'map',
 									mapType: '北京',
 									roam: false,
-									//selectedMode:  'multiple',
+									selectedMode:  'multiple',
 									itemStyle:{
 										normal:{label:{show:true}},	//未mouseover的情况下是否显示label
 										emphasis:{label:{show:true}} 	//mouseover的情况下是否显示label
@@ -188,7 +179,7 @@
 										minAlpha: 0.1,
 										valueScale: 1,
 										opacity: 1,
-										data: heat_data
+									 	data: heat_data
 
 									}
 								}
@@ -203,11 +194,49 @@
 						myChart.setOption(option); 
 
 						console.log("show map finished");
-					}
-				);
+					
+					
+						var ecConfig = require('echarts/config');
+						myChart.on(ecConfig.EVENT.MAP_SELECTED, function (param){
+							//获取选中的区域
+							var selected = param.selected;		//param.selected = ｛"a": true, "b": undefined｝
+							var str = ""; 
+							
+							for (var p in selected) {
+								if (selected[p]) {
+									str += p + ' ';
+								}
+							}
+							document.getElementById("SelectedArea").value = str;
+							//console.log(str);
+
+							//获取选中区域内的充电站信息
+							var count_A = 0;
+							var count_B = 0;
+							for(var i = 0; i < charging_stations_data.length; i ++){
+								if(selected[charging_stations_data[i].location]){
+									if(charging_stations_data[i].type == "A类"){
+										count_A ++;
+									}else if (charging_stations_data[i].type == "B类"){
+										count_B ++;
+									}
+								}
+							}
+							/** 格式化输入字符串**/
+							//用法: "hello{0}".format('world')；返回'hello world'
+							String.prototype.format= function(){
+							   	var args = arguments;
+						    	return this.replace(/\{(\d+)\}/g,function(s,i){
+							 	return args[i];
+						   		});
+							}
+							document.getElementById("ChargingInfo").value = "A类充电站共有{0}个\nB类充电站共有{1}个".format(count_A, count_B);
+
+
+
+						})
+					});
 		
-			//jQuery.subscribe("load_data_done", show_map);
-		//}, 3000);
     </script>
 	
 </body>
