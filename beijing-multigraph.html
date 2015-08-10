@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>人口密度与充电桩规划</title>
+</head>
+
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+	<table id="global" border="0">
+	<tr>
+		<td rowspan="2">
+			<div id="main" style="height:700px;width:700px; ")></div>
+		</td>
+		<td>
+			<div id="subgraph1" style="height:300px;width:400px; ")></div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div id="subgraph2" style="height:300px;width:400px; ")></div>
+		</td>
+		</td>
+	</tr>
+	</div>
+	
+
+	<!-- ECharts单文件引入 -->
+    <script src="echarts-master/build/dist/echarts.js"></script>
+	<!--<script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>-->
+	<script type="text/javascript" src="libs/jquery-1.11.3.min.js"></script> 
+	<!--<script type="text/javascript" src="libs/jquery.subscribe.js"></script>-->
+	
+	<script type="text/javascript" src="echarts-themes\green.js"></script>
+
+	<script type="text/javascript">
+		//加载json数据
+		var urbanlization_level_data, urbanlization_score_data, heat_data;
+		$.getJSON('beijing-multigraph/data.json',function(json){
+			urbanlization_level_data = json.urbanlization_level;
+			electronic_car_data = json.electronic_car_info;
+			heat_data= json.heat_data;
+			
+			urbanlization_score_data = [];
+			for(var i = 0; i < urbanlization_level_data.length; i ++){
+				urbanlization_score_data.push({"name":urbanlization_level_data[i].name, "value":urbanlization_level_data[i].final_score});
+			}
+			console.log("load json data finished");
+			show_map();		//放在回调函数里，数据先加载完在显示图
+			});
+	</script>
+
+
+	<script type="text/javascript" src="beijing-multigraph\GetOptionMainGraph.js"></script>
+	<script type="text/javascript" src="beijing-multigraph\GetOptionSubgraph1.js"></script>
+	<script type="text/javascript" src="beijing-multigraph\GetOptionSubgraph2.js"></script>
+	<script type="text/javascript">
+		function show_map(){	
+			// 路径配置
+			require.config({
+				paths: {
+					echarts: 'echarts-master/build/dist'
+				}
+			});
+			
+			//alert(2);
+
+					
+			console.log("show map begin");
+			require(
+				[
+					'echarts',
+					'echarts/chart/map', // 使用地图，按需加载
+					//'ecahrts/chart/markPoint'
+					'echarts/config',
+					'zrender/tool/event',
+					'echarts/chart/pie',
+					'echarts/chart/bar'
+				],
+				function (ec) {
+					// 基于准备好的dom，初始化echarts图表
+					var myChart = ec.init(document.getElementById('main'), theme);
+					GetOptionMainGraph();	//这里设置了变量option
+					// 为echarts对象加载数据 
+					myChart.setOption(option); 
+
+					console.log("show map finished");
+				
+					//设置点击事件,点击区域显示对应的副图
+					var ecConfig = require('echarts/config');
+					myChart.on(ecConfig.EVENT.MAP_SELECTED, function (param){
+
+						//获取选中的区域
+						var selected = param.selected;		//param.selected = ｛"a": true, "b": undefined｝
+						var selected_area = ""; 
+						
+						for (var p in selected) {
+							if (selected[p]) {
+								selected_area += p;
+							}
+						}
+						if(selected_area != ""){
+							document.getElementById("subgraph1").style.display = "block";	//若有选中，则显示该统计信息的div
+							document.getElementById("subgraph2").style.display = "block";	//若有选中，则显示该统计信息的div
+
+							//console.log(str);
+							var selected_index;
+							for(var i = 0; i < urbanlization_level_data.length; i ++){
+								if(urbanlization_level_data[i].name == selected_area){
+									selected_index = i;	
+									break;
+								}
+							}
+						
+							//第一个子图
+							var myChart2 = ec.init(document.getElementById('subgraph1'), theme);
+							var pie_data = urbanlization_level_data[selected_index].detail_data;
+							var graph_title2 = selected_area + "城市化水平得分详情";
+							GetOptionSubgraph1(graph_title2, pie_data);	//这里设置了变量option2, 饼图中的数据为pie_data
+							myChart2.setOption(option2);
+
+							//第二个子图
+							var myChart3 = ec.init(document.getElementById('subgraph2'), theme);
+							var bar_data = electronic_car_data[selected_index].bar_data;
+							var graph_title3 = selected_area + "近年电动车保有量";
+							GetOptionSubgraph2(graph_title3, bar_data);	//这里设置了变量option3, 饼图中的数据为pie_data
+							myChart3.setOption(option3);
+
+						}else{
+							document.getElementById("subgraph1").style.display = "none";	//若无选中，则隐藏该统计信息的DIV
+							document.getElementById("subgraph2").style.display = "none";	//若无选中，则隐藏该统计信息的DIV
+
+						}
+
+
+
+					});
+
+					
+				
+
+
+
+				});
+		
+		}
+    </script>
+	
+</body>
+</html>
