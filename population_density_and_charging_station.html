@@ -22,6 +22,7 @@
 	<script type="text/javascript" src="libs/jquery-1.11.3.min.js"></script> 
 	<!--<script type="text/javascript" src="libs/jquery.subscribe.js"></script>-->
 	
+	<script type="text/javascript" src="echarts-themes/green.js"></script>
 
 	<script type="text/javascript">
 		//加载json数据
@@ -57,7 +58,7 @@
 				// 路径配置
 				require.config({
 					paths: {
-						echarts: 'echarts-master/build/dist'
+						echarts: 'echarts-master/build/dist',
 					}
 				});
 				
@@ -68,12 +69,11 @@
 				require(
 					[
 						'echarts',
-						'echarts/chart/map' // 使用地图，按需加载
-						//'ecahrts/chart/markPoint'
+						'echarts/chart/map', // 使用地图，按需加载
 					],
 					function (ec) {
 						// 基于准备好的dom，初始化echarts图表
-						var myChart = ec.init(document.getElementById('main')); 
+						var myChart = ec.init(document.getElementById('main'), theme); 
 
 						option = {
 							title : {
