@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>交通情况</title>
+</head>
+
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+	<div id="main" style="height:1000px;width:1000px; ")></div>
+		
+	
+
+	<!-- ECharts单文件引入 -->
+    <script src="echarts-master/build/dist/echarts.js"></script>
+	<script type="text/javascript" src="libs/jquery-1.11.3.min.js"></script> 
+	<script type="text/javascript" src="echarts-themes\green.js"></script>
+
+	<script type="text/javascript">
+		//加载json数据
+		var urbanlization_level_data, urbanlization_score_data, heat_data;
+		/*
+		$.getJSON('beijing-traffic/data.json',function(json){
+			urbanlization_level_data = json.urbanlization_level;
+			electronic_car_data = json.electronic_car_info;
+			heat_data= json.heat_data;
+			
+			urbanlization_score_data = [];
+			for(var i = 0; i < urbanlization_level_data.length; i ++){
+				urbanlization_score_data.push({"name":urbanlization_level_data[i].name, "value":urbanlization_level_data[i].final_score});
+			}
+			console.log("load json data finished");
+			show_map();		//放在回调函数里，数据先加载完在显示图
+			});
+		*/
+	</script>
+
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ObH1Tg4eoPWctNEOP9RlxZKf"></script>
+	<script type="text/javascript" src="beijing-traffic\GetOption.js"></script>
+	<script type="text/javascript">
+		//function show_map(){	
+			// 路径配置
+			require.config({
+				paths: {
+					echarts: 'echarts-master/build/dist'
+				},
+				packages:[
+					{
+						name:'BMap',
+						location: 'echarts-master/extension/BMap/src',
+						main: 'main'
+					}
+				]
+			});
+			
+			//alert(2);
+
+					
+			console.log("show map begin");
+			require(
+				[
+					'echarts',
+					'BMap',
+					'echarts/chart/map', // 使用地图，按需加载
+					//'echarts/config',
+					//'zrender/tool/event',
+				],
+				function (ec, BMapExtension) {
+
+					// 初始化地图
+					var BMapExt = new BMapExtension($('#main')[0], BMap, require('echarts'), require('zrender'));
+					var map = BMapExt.getMap();
+					var container = BMapExt.getEchartsContainer();
+					var startPoint = {
+						x: 104.114129,
+						y: 37.550339
+					};
+					var point = new BMap.Point(startPoint.x, startPoint.y);
+					map.centerAndZoom(point, 5);
+					map.enableScrollWheelZoom(true);
+
+
+					// 配置option
+					GetOption();	//这里设置了变量option
+
+					if (myChart && myChart.dispose) {
+						myChart.dispose();
+					}
+					var myChart = BMapExt.initECharts(container, theme);
+					window.onresize = myChart.resize;
+					BMapExt.setOption(option, true);
+				
+
+				});
+		
+		//}
+    </script>
+	
+</body>
+</html>
