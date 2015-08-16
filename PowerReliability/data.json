@@ -1,0 +1,1703 @@
+{
+    "categories": [
+        {
+            "name": "0"
+        },
+        {
+            "name": "1"
+        },
+        {
+            "name": "2"
+        }
+    ],
+    "nodes": [
+        {
+            "name": "北京市",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": true
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.39%",
+            "category": 0,
+            "symbolSize": 10
+        },
+        {
+            "name": "密云县",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.84%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "密云县0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.92%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "密云县1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.69%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "密云县2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.24%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "怀柔区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.27%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "怀柔区0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.32%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "怀柔区1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.11%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "怀柔区2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.27%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "怀柔区3",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.72%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "怀柔区4",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.92%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "房山区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.88%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "房山区0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.56%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "房山区1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.6%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "房山区2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.14%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "延庆县",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.8%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "延庆县0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.06%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "延庆县1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.22%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "延庆县2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.99%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "延庆县3",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.46%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "门头沟区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.5%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "门头沟区0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.33%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "门头沟区1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.5%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "门头沟区2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.56%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "门头沟区3",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.54%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "昌平区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.64%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "昌平区0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.58%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "昌平区1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.46%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "昌平区2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.32%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "大兴区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.59%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "大兴区0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.85%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "大兴区1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.62%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "大兴区2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.48%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "顺义区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.82%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "顺义区0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.72%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "顺义区1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.41%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "顺义区2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.17%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "顺义区3",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.96%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "顺义区4",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.03%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "平谷区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.72%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "平谷区0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.07%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "平谷区1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.84%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "平谷区2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.68%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "平谷区3",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.26%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "平谷区4",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.26%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "通州区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.95%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "通州区0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.93%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "通州区1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.17%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "通州区2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.67%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "通州区3",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.5%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "朝阳区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.36%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "望京",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.53%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "花家地",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.04%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "燕莎",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.95%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "海淀区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.3%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "北大",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.05%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "中关村",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.32%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "上地",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.73%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "清河",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.94%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "丰台区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.53%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "丰台区0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.42%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "丰台区1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.52%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "丰台区2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.42%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "石景山区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.89%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "石景山区0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.21%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "石景山区1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.8%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "石景山区2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.75%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "石景山区3",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.16%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "西城区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.66%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "西城区0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.69%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "西城区1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.08%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "西城区2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.98%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "西城区3",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.42%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "东城区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.76%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "东城区0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.13%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "东城区1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.04%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "东城区2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.69%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "宣武区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.79%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "宣武区0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.47%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "宣武区1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.74%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "宣武区2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.88%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "宣武区3",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.67%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "宣武区4",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.92%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "崇文区",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.24%",
+            "category": 1,
+            "symbolSize": 6
+        },
+        {
+            "name": "崇文区0",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.04%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "崇文区1",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.62%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "崇文区2",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FFFF00"
+                }
+            },
+            "value": "97.35%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "崇文区3",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF0000"
+                }
+            },
+            "value": "95.82%",
+            "category": 2,
+            "symbolSize": 3
+        },
+        {
+            "name": "崇文区4",
+            "itemStyle": {
+                "normal": {
+                    "label": {
+                        "show": false
+                    },
+                    "color": "#FF8000"
+                }
+            },
+            "value": "96.5%",
+            "category": 2,
+            "symbolSize": 3
+        }
+    ],
+    "links": [
+        {
+            "target": "密云县",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "密云县0",
+            "source": "密云县",
+            "weight": 1
+        },
+        {
+            "target": "密云县1",
+            "source": "密云县",
+            "weight": 1
+        },
+        {
+            "target": "密云县2",
+            "source": "密云县",
+            "weight": 1
+        },
+        {
+            "target": "怀柔区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "怀柔区0",
+            "source": "怀柔区",
+            "weight": 1
+        },
+        {
+            "target": "怀柔区1",
+            "source": "怀柔区",
+            "weight": 1
+        },
+        {
+            "target": "怀柔区2",
+            "source": "怀柔区",
+            "weight": 1
+        },
+        {
+            "target": "怀柔区3",
+            "source": "怀柔区",
+            "weight": 1
+        },
+        {
+            "target": "怀柔区4",
+            "source": "怀柔区",
+            "weight": 1
+        },
+        {
+            "target": "房山区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "房山区0",
+            "source": "房山区",
+            "weight": 1
+        },
+        {
+            "target": "房山区1",
+            "source": "房山区",
+            "weight": 1
+        },
+        {
+            "target": "房山区2",
+            "source": "房山区",
+            "weight": 1
+        },
+        {
+            "target": "延庆县",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "延庆县0",
+            "source": "延庆县",
+            "weight": 1
+        },
+        {
+            "target": "延庆县1",
+            "source": "延庆县",
+            "weight": 1
+        },
+        {
+            "target": "延庆县2",
+            "source": "延庆县",
+            "weight": 1
+        },
+        {
+            "target": "延庆县3",
+            "source": "延庆县",
+            "weight": 1
+        },
+        {
+            "target": "门头沟区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "门头沟区0",
+            "source": "门头沟区",
+            "weight": 1
+        },
+        {
+            "target": "门头沟区1",
+            "source": "门头沟区",
+            "weight": 1
+        },
+        {
+            "target": "门头沟区2",
+            "source": "门头沟区",
+            "weight": 1
+        },
+        {
+            "target": "门头沟区3",
+            "source": "门头沟区",
+            "weight": 1
+        },
+        {
+            "target": "昌平区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "昌平区0",
+            "source": "昌平区",
+            "weight": 1
+        },
+        {
+            "target": "昌平区1",
+            "source": "昌平区",
+            "weight": 1
+        },
+        {
+            "target": "昌平区2",
+            "source": "昌平区",
+            "weight": 1
+        },
+        {
+            "target": "大兴区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "大兴区0",
+            "source": "大兴区",
+            "weight": 1
+        },
+        {
+            "target": "大兴区1",
+            "source": "大兴区",
+            "weight": 1
+        },
+        {
+            "target": "大兴区2",
+            "source": "大兴区",
+            "weight": 1
+        },
+        {
+            "target": "顺义区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "顺义区0",
+            "source": "顺义区",
+            "weight": 1
+        },
+        {
+            "target": "顺义区1",
+            "source": "顺义区",
+            "weight": 1
+        },
+        {
+            "target": "顺义区2",
+            "source": "顺义区",
+            "weight": 1
+        },
+        {
+            "target": "顺义区3",
+            "source": "顺义区",
+            "weight": 1
+        },
+        {
+            "target": "顺义区4",
+            "source": "顺义区",
+            "weight": 1
+        },
+        {
+            "target": "平谷区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "平谷区0",
+            "source": "平谷区",
+            "weight": 1
+        },
+        {
+            "target": "平谷区1",
+            "source": "平谷区",
+            "weight": 1
+        },
+        {
+            "target": "平谷区2",
+            "source": "平谷区",
+            "weight": 1
+        },
+        {
+            "target": "平谷区3",
+            "source": "平谷区",
+            "weight": 1
+        },
+        {
+            "target": "平谷区4",
+            "source": "平谷区",
+            "weight": 1
+        },
+        {
+            "target": "通州区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "通州区0",
+            "source": "通州区",
+            "weight": 1
+        },
+        {
+            "target": "通州区1",
+            "source": "通州区",
+            "weight": 1
+        },
+        {
+            "target": "通州区2",
+            "source": "通州区",
+            "weight": 1
+        },
+        {
+            "target": "通州区3",
+            "source": "通州区",
+            "weight": 1
+        },
+        {
+            "target": "朝阳区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "望京",
+            "source": "朝阳区",
+            "weight": 1
+        },
+        {
+            "target": "花家地",
+            "source": "朝阳区",
+            "weight": 1
+        },
+        {
+            "target": "燕莎",
+            "source": "朝阳区",
+            "weight": 1
+        },
+        {
+            "target": "海淀区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "北大",
+            "source": "海淀区",
+            "weight": 1
+        },
+        {
+            "target": "中关村",
+            "source": "海淀区",
+            "weight": 1
+        },
+        {
+            "target": "上地",
+            "source": "海淀区",
+            "weight": 1
+        },
+        {
+            "target": "清河",
+            "source": "海淀区",
+            "weight": 1
+        },
+        {
+            "target": "丰台区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "丰台区0",
+            "source": "丰台区",
+            "weight": 1
+        },
+        {
+            "target": "丰台区1",
+            "source": "丰台区",
+            "weight": 1
+        },
+        {
+            "target": "丰台区2",
+            "source": "丰台区",
+            "weight": 1
+        },
+        {
+            "target": "石景山区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "石景山区0",
+            "source": "石景山区",
+            "weight": 1
+        },
+        {
+            "target": "石景山区1",
+            "source": "石景山区",
+            "weight": 1
+        },
+        {
+            "target": "石景山区2",
+            "source": "石景山区",
+            "weight": 1
+        },
+        {
+            "target": "石景山区3",
+            "source": "石景山区",
+            "weight": 1
+        },
+        {
+            "target": "西城区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "西城区0",
+            "source": "西城区",
+            "weight": 1
+        },
+        {
+            "target": "西城区1",
+            "source": "西城区",
+            "weight": 1
+        },
+        {
+            "target": "西城区2",
+            "source": "西城区",
+            "weight": 1
+        },
+        {
+            "target": "西城区3",
+            "source": "西城区",
+            "weight": 1
+        },
+        {
+            "target": "东城区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "东城区0",
+            "source": "东城区",
+            "weight": 1
+        },
+        {
+            "target": "东城区1",
+            "source": "东城区",
+            "weight": 1
+        },
+        {
+            "target": "东城区2",
+            "source": "东城区",
+            "weight": 1
+        },
+        {
+            "target": "宣武区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "宣武区0",
+            "source": "宣武区",
+            "weight": 1
+        },
+        {
+            "target": "宣武区1",
+            "source": "宣武区",
+            "weight": 1
+        },
+        {
+            "target": "宣武区2",
+            "source": "宣武区",
+            "weight": 1
+        },
+        {
+            "target": "宣武区3",
+            "source": "宣武区",
+            "weight": 1
+        },
+        {
+            "target": "宣武区4",
+            "source": "宣武区",
+            "weight": 1
+        },
+        {
+            "target": "崇文区",
+            "source": "北京市",
+            "weight": 1
+        },
+        {
+            "target": "崇文区0",
+            "source": "崇文区",
+            "weight": 1
+        },
+        {
+            "target": "崇文区1",
+            "source": "崇文区",
+            "weight": 1
+        },
+        {
+            "target": "崇文区2",
+            "source": "崇文区",
+            "weight": 1
+        },
+        {
+            "target": "崇文区3",
+            "source": "崇文区",
+            "weight": 1
+        },
+        {
+            "target": "崇文区4",
+            "source": "崇文区",
+            "weight": 1
+        }
+    ]
+}

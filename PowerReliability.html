@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<META http-equiv=Content-Type content="text/html; charset=utf8">
+	<title></title>
+</head>
+
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+	<div id="main" style="height:700px;width:700px;float:left ")></div>
+	<div id="control" style="height:400px;width:400px;float:left"></div>	
+	
+
+	<!-- ECharts单文件引入 -->
+    <script src="echarts-master/build/dist/echarts.js"></script>
+	<script type="text/javascript" src="libs/jquery-1.11.3.min.js"></script> 
+	<script type="text/javascript" src="echarts-themes\green.js"></script>
+
+
+	<script type="text/javascript" src="PowerReliability\GetOption.js"></script>
+	<script type="text/javascript" src="PowerReliability\GetOptionControlGraph.js"></script>
+	<script type="text/javascript">
+		// 路径配置
+		require.config({
+			paths: {
+				echarts: 'echarts-master/build/dist'
+			}
+		});
+
+		show_control_map();		//加载控制图
+		
+		//加载json数据
+		var traffic_data;
+		console.log("load data begin");
+		var data;	//data设为全局，因为后面更新数据需要用到
+		$.getJSON('PowerReliability/data.json',function(json){
+			console.log("load json data finished");
+			data = json;
+			show_map(data);	//显示选中副图
+			});
+
+		function show_control_map(){
+			
+			console.log("show map begin");
+			require(
+				[
+					'echarts',
+					'echarts/chart/map', // 使用地图，按需加载
+					'echarts/config',
+					'zrender/tool/event',
+				],
+				function (ec) {
+					// 基于准备好的dom，初始化echarts图表
+					var myChart = ec.init(document.getElementById('control'));
+					GetOptionControlGraph();	//这里设置了变量option
+					// 为echarts对象加载数据 
+					myChart.setOption(option); 
+
+					console.log("show map finished");
+				
+					//设置点击事件,点击区域显示对应的副图
+					var ecConfig = require('echarts/config');
+					myChart.on(ecConfig.EVENT.MAP_SELECTED, function (param){
+
+						//获取选中的区域
+						var selected = param.selected;		//param.selected = ｛"a": true, "b": undefined｝
+						var selected_area = ""; 
+						
+						for (var p in selected) {
+							if (selected[p]) {
+								selected_area += p;
+							}
+						}
+						
+						var myChart = ec.init(document.getElementById('main'), theme);
+						//获取需要显示标签的node
+						nodes_to_show = get_son(selected_area);
+						nodes_to_show.push(selected_area);
+
+						//根据nodes_to_show更新data
+						for (var i = 0; i < data.nodes.length; i ++){
+							flag = false;	//false则不显示，true则显示
+							for(var j = 0; j < nodes_to_show.length; j ++){
+								if(data.nodes[i].name == "北京市" || data.nodes[i].name == nodes_to_show[j]){
+									flag = true;
+									break;
+								}
+							}
+							if (flag == true){
+								data.nodes[i].itemStyle.normal.label.show = true;
+								if (data.nodes[i].category == 1){
+									data.nodes[i].symbolSize = 20;
+								}else if (data.nodes[i].category == 2){
+									data.nodes[i].symbolSize = 15;
+								}
+							}else{
+								data.nodes[i].itemStyle.normal.label.show = false;
+								if (data.nodes[i].category == 1){
+									data.nodes[i].symbolSize = 6;
+								}else if (data.nodes[i].category == 2){
+									data.nodes[i].symbolSize = 3;
+								}
+							}
+						}
+
+						GetOption(data);	//获取option
+						myChart.setOption(option, true);
+						
+					})
+
+				})
+		}
+		
+		//获取孩子节点
+		function get_son(parent_node_name){
+			var sons = [];
+			for(var i = 0;  i < data.links.length; i ++){
+				if(data.links[i].source == parent_node_name){
+					sons.push(data.links[i].target);
+				}
+			}
+			return sons;
+
+		}
+
+		function show_map(data){					
+			console.log("show map begin");
+			require(
+				[
+					'echarts',
+					'echarts/chart/force',
+					//'echarts/config',
+					//'zrender/tool/event',
+				],
+				function (ec) {
+					var myChart = ec.init(document.getElementById('main'), theme);
+					
+					//var myChart = ec.init(document.getElementById('main'));
+
+					// 配置option
+					GetOption(data);	//这里设置了变量option
+
+					myChart.setOption(option, true);
+				
+
+				});
+		
+		}
+    </script>
+	
+</body>
+</html>
+
