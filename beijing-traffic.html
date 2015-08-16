@@ -1,85 +1,152 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>��ͨ���</title>
+	<META http-equiv=Content-Type content="text/html; charset=utf8">
+    <title>北京交通情况总览</title>
 </head>
 
 <body>
-    <!-- ΪECharts׼��һ���߱���С�����ߣ���Dom -->
-	<div id="main" style="height:800px;width:800px; ")></div>
-		
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+	<div id="main" style="height:700px;width:700px;float:left "></div>
+	<div id="control" style="height:500px;width:500px;float:left"></div>	
 	
 
-	<!-- ECharts���ļ����� -->
+	<!-- ECharts单文件引入 -->
     <script src="echarts-master/build/dist/echarts.js"></script>
 	<script type="text/javascript" src="libs/jquery-1.11.3.min.js"></script> 
-	<script type="text/javascript" src="echarts-themes\green.js"></script>
+	<!--<script type="text/javascript" src="echarts-themes\green.js"></script>-->
 
 
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ObH1Tg4eoPWctNEOP9RlxZKf"></script>
 	<script type="text/javascript" src="beijing-traffic\GetOption.js"></script>
+	<script type="text/javascript" src="beijing-traffic\GetOptionControlGraph.js"></script>
+	<!--<script type="text/javascript" src="http://api.map.baidu.com/library/AreaRestriction/1.2/src/AreaRestriction_min.js"></script>-->
 	<script type="text/javascript">
-		//����json����
-		var traffic_data;
-		console.log("load data begin");
-		$.getJSON('beijing-traffic/data.json',function(json){
-			traffic_data = json.traffic_data;
-			console.log("load json data finished");
-			show_map();		//���ڻص�����������ȼ���������ʾͼ
-			});
 
-		function show_map(){	
-			// ·������
-			require.config({
-				paths: {
-					echarts: 'echarts-master/build/dist'
-				},
-				packages:[
-					{
-						name:'BMap',
-						location: 'echarts-master/extension/BMap/src',
-						main: 'main'
-					}
-				]
-			});
+		// 路径配置
+		require.config({
+			paths: {
+				echarts: 'echarts-master/build/dist'
+			},
+			packages:[
+				{
+					name:'BMap',
+					location: 'echarts-master/extension/BMap/src',
+					main: 'main'
+				}
+			]
+		});
+		
+		show_control_map();		//主入口
+
+		function show_control_map(){
 			
-			//alert(2);
+			console.log("show map begin");
+			require(
+				[
+					'echarts',
+					'echarts/chart/map', // 使用地图，按需加载
+					'echarts/config',
+					'zrender/tool/event',
+				],
+				function (ec) {
+					// 基于准备好的dom，初始化echarts图表
+					var myChart = ec.init(document.getElementById('control'));
+					GetOptionControlGraph();	//这里设置了变量option
+					// 为echarts对象加载数据 
+					myChart.setOption(option); 
 
-					
+					console.log("show map finished");
+				
+					//设置点击事件,点击区域显示对应的副图
+					var ecConfig = require('echarts/config');
+					myChart.on(ecConfig.EVENT.MAP_SELECTED, function (param){
+
+						//获取选中的区域
+						var selected = param.selected;		//param.selected = ｛"a": true, "b": undefined｝
+						var selected_area = ""; 
+						
+						for (var p in selected) {
+							if (selected[p]) {
+								selected_area += p;
+							}
+						}
+						//加载json数据
+						var traffic_data;
+						console.log("load data begin");
+						$.getJSON('beijing-traffic\\districts\\' + selected_area + '.json',function(json){
+							traffic_data = json.traffic_data;
+							console.log("load json data finished");
+							show_map(selected_area, traffic_data);	//显示选中区域的交通图
+							});
+					})
+
+				})
+		}
+
+
+		function show_map(district, traffic_data){	
+			
 			console.log("show map begin");
 			require(
 				[
 					'echarts',
 					'BMap',
-					'echarts/chart/map', // ʹ�õ�ͼ���������
+					'echarts/chart/map', // 使用地图，按需加载
 					//'echarts/config',
 					//'zrender/tool/event',
 				],
 				function (ec, BMapExtension) {
 
-					// ��ʼ����ͼ
+					// 初始化地图
 					var BMapExt = new BMapExtension($('#main')[0], BMap, require('echarts'), require('zrender'));
 					var map = BMapExt.getMap();
 					var container = BMapExt.getEchartsContainer();
-					var startPoint = {
-						//x: 104.114129,
-						//y: 37.550339
+					var modes = {
+						"延庆县":{"cp":[116.1543,40.5286], "left_down": [], "zoom": 12},
+						"大兴区":{"cp":[116.4716,39.6352], "zoom": 12},
+						"宣武区":{"cp":[116.3603,39.8852], "zoom": 14},
+						"崇文区":{"cp":[116.4166,39.8811], "zoom": 14},
+						"通州区":{"cp":[116.7297,39.8131], "zoom": 12},
+						"房山区":{"cp":[115.8453,39.7163], "zoom": 12},
+						"怀柔区":{"cp":[116.6377,40.6219], "zoom": 12},
+						"石景山区":{"cp":[116.1887,39.9346], "zoom": 12},
+						"西城区":{"cp":[116.3631,39.9353], "zoom": 13},
+						"东城区":{"cp":[116.418,39.9367], "zoom": 13},
+						"顺义区":{"cp":[116.7242,40.1619], "zoom": 12},
+						"丰台区":{"cp":[116.2683,39.8309], "zoom": 12},
+						"门头沟区":{"cp":[115.8,39.9957], "zoom": 12},
+						"海淀区":{"cp":[116.2202,40.0239], "zoom": 12},
+						"朝阳区":{"cp":[116.4977,39.949], "zoom": 12},
+						"昌平区":{"cp":[116.1777,40.2134], "zoom": 12},
+						"平谷区":{"cp":[117.1706,40.2052], "zoom": 12},
+						"密云县":{"cp":[117.0923,40.5121], "zoom": 12}
+					};
+					/*
+					var startPoint = {	//北京中心
 						x: 116.4247,
 						y: 39.9056
 					};
 					var point = new BMap.Point(startPoint.x, startPoint.y);
-					map.centerAndZoom(point, 10);
+					map.centerAndZoom(point, 11);
+					*/
+					var point = new BMap.Point(modes[district]["cp"][0], modes[district]["cp"][1]);
+					map.centerAndZoom(point, modes[district]["zoom"]);
 					map.enableScrollWheelZoom(true);
 
+					//将地图显示范围设定在指定区域，地图拖出该区域后会重新弹回
+					//var boundary = new BMap.Bounds(new BMap.Point(116.0486, 39.8866),new BMap.Point(116.3919, 40.1612));
+					//BMapLib.AreaRestriction.setBounds(map, boundary);
 
-					// ����option
-					GetOption(traffic_data);	//���������˱���option
+					// 配置option
+					GetOption(traffic_data);	//这里设置了变量option
 
 					if (myChart && myChart.dispose) {
 						myChart.dispose();
 					}
-					var myChart = BMapExt.initECharts(container, theme);
+					
+
+					var myChart = BMapExt.initECharts(container);
 					window.onresize = myChart.resize;
 					BMapExt.setOption(option, true);
 				

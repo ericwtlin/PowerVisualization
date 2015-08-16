@@ -53,6 +53,8 @@ function GetOption(traffic_data){
 							lineStyle: {
 								type: 'solid',
 								color: 'red',
+								shadowBlur: 10,
+								//width: 
 							}
 						}
 					},
@@ -84,6 +86,8 @@ function GetOption(traffic_data){
 							lineStyle: {
 								type: 'solid',
 								color: 'yellow',
+								shadowBlur: 10,
+								//width: 
 							}
 						}
 					},
@@ -114,7 +118,9 @@ function GetOption(traffic_data){
 							borderWidth:1,
 							lineStyle: {
 								type: 'solid',
-								color: 'green'
+								color: 'green',
+								shadowBlur: 10,
+								//width: 
 							}
 						}
 					},
