@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<META http-equiv=Content-Type content="text/html; charset=utf8">
+    <title>北京交通情况与电网可靠性总览</title>
+</head>
+
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+	<div id="control" style="height:300px;width:300px;float:left"></div>	
+	<div id="reliability" style="height:500px;width:500px;float:left ")></div>
+	<div id="traffic" style="height:500px;width:500px;float:left "></div>
+	
+	<div style="clear:both">
+		<p><B></br>北京市电网可靠性视图介绍(第2幅子图)</B></p>
+		<p>功能：</br>展示北京市电网可靠性信息</p>
+		<p>使用方法与说明：</br>1.可靠性视图有3种大小不同的圆圈，大、中、小分别表示市、区县、乡镇商圈；有3种颜色，红、橙、黄分别表示可靠性在95%~96%、96~97%、97%~98%。</p>
+		<p>2.可靠性视图默认不显示圆圈对应的区域名字；点选右图行政区划图，将在可靠性视图中突出显示所选中的区县。</p>
+
+		<p><B></br>北京市交通流量图视图介绍(第3幅子图)</B></p>
+		<p>功能：</br>展示北京市交通流量的统计情况</br>(将实时交通流量通过采样与统计，得出一段时间内的流量统计)</p>
+		<p>使用方法：</br>1.视图包括一个行政区划图(用于控制数据指向)和一个交通数据图。
+					</br>2.点击行政区划图中的某个区县，交通数据图中将显示对应区域的交通流量统计情况。
+					</br>3.交通流量统计情况直接显示在道路上，有3种颜色的线，红色表示拥堵路段，黄色表示缓行路段，绿色表示畅通路段。
+		</p>
+
+	</div>
+
+	<!-- ECharts单文件引入 -->
+    <script src="echarts-master/build/dist/echarts.js"></script>
+	<script type="text/javascript" src="libs/jquery-1.11.3.min.js"></script> 
+	<script type="text/javascript" src="echarts-themes\green.js"></script>
+
+
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ObH1Tg4eoPWctNEOP9RlxZKf"></script>
+	<script type="text/javascript" src="beijing-traffic\GetOption.js"></script>
+	<script type="text/javascript" src="beijing-traffic\GetOptionControlGraph.js"></script>
+	<script type="text/javascript" src="PowerReliability\GetOption.js"></script>
+	<!--<script type="text/javascript" src="http://api.map.baidu.com/library/AreaRestriction/1.2/src/AreaRestriction_min.js"></script>-->
+	<script type="text/javascript">
+
+		// 路径配置
+		require.config({
+			paths: {
+				echarts: 'echarts-master/build/dist'
+			},
+			packages:[
+				{
+					name:'BMap',
+					location: 'echarts-master/extension/BMap/src',
+					main: 'main'
+				}
+			]
+		});
+		
+		show_control_map();		//主入口
+
+		//交通图默认先显示北京全图无数据
+		var traffic_data = {
+			"nodes_geoCoord" : {},
+			"quick_line" : [],
+			"jam_line" : [],
+			"slow_line" : []
+		};
+		show_traffic_map("北京市", traffic_data);	//显示选中区域的交通图
+
+
+		//展示默认可靠性视图
+		var traffic_data;
+		console.log("load data begin");
+		var data;	//data设为全局，因为后面更新数据需要用到
+		$.getJSON('PowerReliability/data.json',function(json){
+			console.log("load reliability json data finished");
+			reliability_data = json;
+			show_reliability_map(reliability_data);	//显示选中副图
+			});
+
+		//显示控制图
+		function show_control_map(){
+			
+			console.log("show map begin");
+			require(
+				[
+					'echarts',
+					'echarts/chart/map', // 使用地图，按需加载
+					'echarts/config',
+					'zrender/tool/event',
+				],
+				function (ec) {
+					// 基于准备好的dom，初始化echarts图表
+					var myChart = ec.init(document.getElementById('control'));
+					GetOptionControlGraph();	//这里设置了变量option
+					// 为echarts对象加载数据 
+					myChart.setOption(option); 
+
+					console.log("show control map finished");
+				
+					//设置点击事件,点击区域显示对应的副图
+					var ecConfig = require('echarts/config');
+					myChart.on(ecConfig.EVENT.MAP_SELECTED, function (param){
+
+						//获取选中的区域
+						var selected = param.selected;		//param.selected = ｛"a": true, "b": undefined｝
+						var selected_area = ""; 
+						
+						for (var p in selected) {
+							if (selected[p]) {
+								selected_area += p;
+							}
+						}
+
+						
+
+
+						//展示电网可靠性视图
+						//获取需要显示标签的node
+						nodes_to_show = get_son(selected_area);
+						nodes_to_show.push(selected_area);
+
+						//根据nodes_to_show更新data
+						for (var i = 0; i < reliability_data.nodes.length; i ++){
+							flag = false;	//false则不显示，true则显示
+							for(var j = 0; j < nodes_to_show.length; j ++){
+								if(reliability_data.nodes[i].name == "北京市" || reliability_data.nodes[i].name == nodes_to_show[j]){
+									flag = true;
+									break;
+								}
+							}
+							if (flag == true){
+								reliability_data.nodes[i].itemStyle.normal.label.show = true;
+								if (reliability_data.nodes[i].category == 1){
+									reliability_data.nodes[i].symbolSize = 20;
+								}else if (reliability_data.nodes[i].category == 2){
+									reliability_data.nodes[i].symbolSize = 15;
+								}
+							}else{
+								reliability_data.nodes[i].itemStyle.normal.label.show = false;
+								if (reliability_data.nodes[i].category == 1){
+									reliability_data.nodes[i].symbolSize = 6;
+								}else if (reliability_data.nodes[i].category == 2){
+									reliability_data.nodes[i].symbolSize = 3;
+								}
+							}
+						}
+						var reliabilityChart = ec.init(document.getElementById('reliability'), theme);
+						GetReliabilityOption(reliability_data);	//获取option
+						reliabilityChart.setOption(option, true);
+						console.log("reliability graph updated");
+
+
+						//展示交通流量视图
+						var traffic_data;
+						console.log("load traffic data begin");
+						$.getJSON('beijing-traffic\\districts\\' + selected_area + '.json',function(json){
+							traffic_data = json.traffic_data;
+							console.log("load traffic json data finished");
+							show_traffic_map(selected_area, traffic_data);	//显示选中区域的交通图
+							});
+					})
+
+				})
+		}
+
+
+		//显示交通情况视图
+		function show_traffic_map(district, traffic_data){	
+			
+			console.log("show traffic map begin");
+			require(
+				[
+					'echarts',
+					'BMap',
+					'echarts/chart/map', // 使用地图，按需加载
+					//'echarts/config',
+					//'zrender/tool/event',
+				],
+				function (ec, BMapExtension) {
+
+					// 初始化地图
+					var BMapExt = new BMapExtension($('#traffic')[0], BMap, require('echarts'), require('zrender'));
+					var map = BMapExt.getMap();
+					var container = BMapExt.getEchartsContainer();
+					var modes = {
+						"北京市":{"cp":[116.4247,39.9056], "zoom": 11},
+						"延庆县":{"cp":[116.1543,40.5286], "left_down": [], "zoom": 12},
+						"大兴区":{"cp":[116.4716,39.6352], "zoom": 12},
+						"宣武区":{"cp":[116.3603,39.8852], "zoom": 14},
+						"崇文区":{"cp":[116.4166,39.8811], "zoom": 14},
+						"通州区":{"cp":[116.7297,39.8131], "zoom": 12},
+						"房山区":{"cp":[115.8453,39.7163], "zoom": 12},
+						"怀柔区":{"cp":[116.6377,40.6219], "zoom": 12},
+						"石景山区":{"cp":[116.1887,39.9346], "zoom": 12},
+						"西城区":{"cp":[116.3631,39.9353], "zoom": 13},
+						"东城区":{"cp":[116.418,39.9367], "zoom": 13},
+						"顺义区":{"cp":[116.7242,40.1619], "zoom": 12},
+						"丰台区":{"cp":[116.2683,39.8309], "zoom": 12},
+						"门头沟区":{"cp":[115.8,39.9957], "zoom": 12},
+						"海淀区":{"cp":[116.2202,40.0239], "zoom": 12},
+						"朝阳区":{"cp":[116.4977,39.949], "zoom": 12},
+						"昌平区":{"cp":[116.1777,40.2134], "zoom": 12},
+						"平谷区":{"cp":[117.1706,40.2052], "zoom": 12},
+						"密云县":{"cp":[117.0923,40.5121], "zoom": 12}
+					};
+					
+					var point = new BMap.Point(modes[district]["cp"][0], modes[district]["cp"][1]);
+					map.centerAndZoom(point, modes[district]["zoom"]);
+					map.enableScrollWheelZoom(true);
+
+					//将地图显示范围设定在指定区域，地图拖出该区域后会重新弹回
+					//var boundary = new BMap.Bounds(new BMap.Point(116.0486, 39.8866),new BMap.Point(116.3919, 40.1612));
+					//BMapLib.AreaRestriction.setBounds(map, boundary);
+
+					// 配置option
+					GetTrafficOption(traffic_data);	//这里设置了变量option
+
+					if (myChart && myChart.dispose) {
+						myChart.dispose();
+					}
+					
+
+					var myChart = BMapExt.initECharts(container);
+					window.onresize = myChart.resize;
+					BMapExt.setOption(option, true);
+				
+					console.log("show traffic map finished");
+				});
+		
+		}
+		
+		//获取孩子节点
+		function get_son(parent_node_name){
+			var sons = [];
+			for(var i = 0;  i < reliability_data.links.length; i ++){
+				if(reliability_data.links[i].source == parent_node_name){
+					sons.push(reliability_data.links[i].target);
+				}
+			}
+			return sons;
+
+		}
+
+		//展示电网可靠性视图
+		function show_reliability_map(data){					
+			console.log("show reliability map begin");
+			require(
+				[
+					'echarts',
+					'echarts/chart/force',
+					//'echarts/config',
+					//'zrender/tool/event',
+				],
+				function (ec) {
+					var myChart = ec.init(document.getElementById('reliability'), theme);
+					
+					//var myChart = ec.init(document.getElementById('main'));
+
+					// 配置option
+					GetReliabilityOption(reliability_data);	//这里设置了变量option
+
+					myChart.setOption(option, true);
+				
+					console.log("show reliability map finished");
+
+				});
+		
+		}
+
+	
+    </script>
+	
+</body>
+</html>
+
