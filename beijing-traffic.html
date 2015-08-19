@@ -7,9 +7,17 @@
 
 <body>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-	<div id="main" style="height:700px;width:700px;float:left "></div>
+	<div id="main" style="height:600px;width:600px;float:left "></div>
 	<div id="control" style="height:500px;width:500px;float:left"></div>	
-	
+	<div style="clear:both">
+		<p></br>视图介绍</p>
+		<p>功能：</br>展示北京市交通流量的统计情况</br>(将实时交通流量通过采样与统计，得出一段时间内的流量统计)</p>
+		<p>使用方法：</br>1.视图包括一个行政区划图(用于控制数据指向)和一个交通数据图。
+					</br>2.点击行政区划图中的某个区县，交通数据图中将显示对应区域的交通流量统计情况。
+					</br>3.交通流量统计情况直接显示在道路上，有3种颜色的线，红色表示拥堵路段，黄色表示缓行路段，绿色表示畅通路段。
+		</p>
+		
+	</div>
 
 	<!-- ECharts单文件引入 -->
     <script src="echarts-master/build/dist/echarts.js"></script>
@@ -39,6 +47,16 @@
 		
 		show_control_map();		//主入口
 
+		//交通图默认先显示北京全图无数据
+		var traffic_data = {
+			"nodes_geoCoord" : {},
+			"quick_line" : [],
+			"jam_line" : [],
+			"slow_line" : []
+		};
+		show_map("北京市", traffic_data);	//显示选中区域的交通图
+		
+
 		function show_control_map(){
 			
 			console.log("show map begin");
@@ -58,6 +76,8 @@
 
 					console.log("show map finished");
 				
+					
+
 					//设置点击事件,点击区域显示对应的副图
 					var ecConfig = require('echarts/config');
 					myChart.on(ecConfig.EVENT.MAP_SELECTED, function (param){
@@ -103,7 +123,8 @@
 					var map = BMapExt.getMap();
 					var container = BMapExt.getEchartsContainer();
 					var modes = {
-						"延庆县":{"cp":[116.1543,40.5286], "left_down": [], "zoom": 12},
+						"北京市":{"cp":[116.4247,39.9056], "zoom": 11},
+						"延庆县":{"cp":[116.1543,40.5286], "zoom": 12},
 						"大兴区":{"cp":[116.4716,39.6352], "zoom": 12},
 						"宣武区":{"cp":[116.3603,39.8852], "zoom": 14},
 						"崇文区":{"cp":[116.4166,39.8811], "zoom": 14},
@@ -122,14 +143,7 @@
 						"平谷区":{"cp":[117.1706,40.2052], "zoom": 12},
 						"密云县":{"cp":[117.0923,40.5121], "zoom": 12}
 					};
-					/*
-					var startPoint = {	//北京中心
-						x: 116.4247,
-						y: 39.9056
-					};
-					var point = new BMap.Point(startPoint.x, startPoint.y);
-					map.centerAndZoom(point, 11);
-					*/
+					
 					var point = new BMap.Point(modes[district]["cp"][0], modes[district]["cp"][1]);
 					map.centerAndZoom(point, modes[district]["zoom"]);
 					map.enableScrollWheelZoom(true);
@@ -139,7 +153,7 @@
 					//BMapLib.AreaRestriction.setBounds(map, boundary);
 
 					// 配置option
-					GetOption(traffic_data);	//这里设置了变量option
+					GetTrafficOption(traffic_data);	//这里设置了变量option
 
 					if (myChart && myChart.dispose) {
 						myChart.dispose();

@@ -2,7 +2,7 @@
 <html>  
   <head>  
         <meta charset="utf-8">  
-        <title>Map</title>  
+        <title>北京市历年用电网统计图</title>  
   </head> 
 <style>
 	#map {
@@ -45,15 +45,22 @@
 </style>
 <body>
 	
-	<div id="tooltip" class="hidden">
-			<p><strong>省份：</strong><span id="province">100</span></p>
-			<p><strong>年份：</strong><span id="year">100</span></p>
-			<p><strong>总和：</strong><span id="sum">100</span></p>
-			<p><strong>工业用电：</strong><span id="industry1">100</span></p>
-			<p><strong>家庭用电：</strong><span id="industry2">100</span></p>
-			<p><strong>其他：</strong><span id="industry3">100</span></p>
-	</div>
+<div id="tooltip" class="hidden">
+		<p><strong>地区：</strong><span id="province">100</span></p>
+		<p><strong>年份：</strong><span id="year">100</span></p>
+		<p><strong>总和：</strong><span id="sum">100</span></p>
+		<p><strong>工业用电：</strong><span id="industry1">100</span></p>
+		<p><strong>家庭用电：</strong><span id="industry2">100</span></p>
+		<p><strong>其他：</strong><span id="industry3">100</span></p>
+</div>
 <div id="map"></div>
+<div style="clear:both">
+	<p></br>视图介绍</p>
+	<p>功能：</br>展示北京市各年份各种类型的用电量统计</p>
+	<p>使用方法：</br>1.点击视图下方的年份，可以控制全局时间
+				</br>2.每个区县上的小饼图是与真实数据对应的饼图，鼠标mouseover到小饼图上面将显示更详细的数据信息
+				</br>3.区县名称默认不显示，若需显示，则点击按钮“点击 显示/隐藏 区域名称”</p>
+</div>
 
 <script src="libs/d3.v3.min.js"></script>
 <!--<script src="libs/topojson.v1.min.js"></script>-->
@@ -85,10 +92,8 @@
 
 	var globalyear = 2004;
 	
-	
-	
 	var timeheight = 80;
-	var width  = 1000;
+	var width  = 600;
 	var height = 500;
 	var background = "#D1EEEE";
 	var overColor = "#F08080";

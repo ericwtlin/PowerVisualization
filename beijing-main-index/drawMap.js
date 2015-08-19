@@ -1,7 +1,7 @@
 function drawMap(mapPath, svg, centerx, centery) {
 	var projection = d3.geo.mercator()
 					.center([centerx, centery])
-					.scale(10000)
+					.scale(11000)
     			.translate([width/4+80, height/2]);
 	
 	var path = d3.geo.path().projection(projection);

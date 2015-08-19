@@ -1,4 +1,4 @@
-function GetOption(data){
+function GetReliabilityOption(data){
 option = {
     title : {
         text: '北京市电网可靠性概览',

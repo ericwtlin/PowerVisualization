@@ -10,6 +10,13 @@
 	<div id="main" style="height:700px;width:700px;float:left ")></div>
 	<div id="control" style="height:400px;width:400px;float:left"></div>	
 	
+	<div style="clear:both">
+		<p></br>视图介绍</p>
+		<p>功能：</br>展示北京市电网可靠性信息</p>
+		<p>使用方法与说明：</br>1.可靠性视图有3种大小不同的圆圈，大、中、小分别表示市、区县、乡镇商圈；有3种颜色，红、橙、黄分别表示可靠性在95%~96%、96~97%、97%~98%。</p>
+		<p>2.可靠性视图默认不显示圆圈对应的区域名字；点选右图行政区划图，将在可靠性视图中突出显示所选中的区县。</p>
+
+	</div>
 
 	<!-- ECharts单文件引入 -->
     <script src="echarts-master/build/dist/echarts.js"></script>
@@ -72,7 +79,6 @@
 							}
 						}
 						
-						var myChart = ec.init(document.getElementById('main'), theme);
 						//获取需要显示标签的node
 						nodes_to_show = get_son(selected_area);
 						nodes_to_show.push(selected_area);
@@ -103,7 +109,8 @@
 							}
 						}
 
-						GetOption(data);	//获取option
+						var myChart = ec.init(document.getElementById('main'), theme);
+						GetReliabilityOption(data);	//获取option
 						myChart.setOption(option, true);
 						
 					})
@@ -138,7 +145,7 @@
 					//var myChart = ec.init(document.getElementById('main'));
 
 					// 配置option
-					GetOption(data);	//这里设置了变量option
+					GetReliabilityOption(data);	//这里设置了变量option
 
 					myChart.setOption(option, true);
 				

@@ -7,13 +7,24 @@
 
 <body>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="main" style="height:1100px;width:1100px; z-index:1;position:absolute;background-color:white;")></div>
+    <div id="main" style="height:600px;width:600px; z-index:1;position:absolute;background-color:white; ")></div>
 	<!--<div id="main" style="height:1100px;width:1100px; float:left")></div>-->
 	<div id="statistics" style="z-index:2;position:absolute;background-color:white;top:30px;display:none">
 			<p>当前选中的区域是:</p>
-			<textarea id="SelectedArea" readonly="readonly" rows=3 cols=30/> </textarea>
+			<textarea id="SelectedArea" readonly="readonly" rows=3 cols=20/> </textarea>
 			<p>该区域中的充电桩统计信息:</p>
-			<textarea id="ChargingInfo" readonly="readonly" rows=5 cols=30/></textarea>
+			<textarea id="ChargingInfo" readonly="readonly" rows=5 cols=20/></textarea>
+	</div>
+
+	<div style="position: absolute; top:620px">
+		<p></br>视图介绍</p>
+		<p>功能：</br>展示北京市人口密度与充电站信息</p>
+		<p>使用方法与说明：</br>1.行政区划图中的颜色深浅表示了该区域人口密度的高低，可以通过左下角的值域选择条来调整需要显示的值域范围。</p>
+		<p>2.行政区划图上覆盖的热力图表示电动车的分布。</p>
+		<p>3.行政区划图上的灰色标注是充电桩信息，鼠标mouseover将显示该充电站的详情。</p>
+		<p>4.点选某个区县，将在左上角显示对应区县的充电桩统计详情，区县支持多选。</p>
+		<p>5.行政区划图右上角的缩放工具可以放大缩小、调整位置。</p>
+
 	</div>
 
 	<!-- ECharts单文件引入 -->
@@ -36,22 +47,6 @@
 			});
 	</script>
 
-	<script type="text/javascript">
-    	//处理得到热力数据
-		//console.log("make heat data begin");
-		//var heat_data = heat_data_preprocess;
-		/*
-		var heat_data = [];
-		for(var i = 0; i < heat_data_preprocess.length; i ++){
-			//for(var j = 0; j < 100; j ++){	//重复100遍，否则数量太少，显示不出效果
-				heat_data.push([heat_data_preprocess[i].x, heat_data_preprocess[i].y, heat_data_preprocess[i].value]);
-			//}
-		}
-		*/
-
-		//console.log("make heat data finished");
-
-	</script>
 	<script type="text/javascript">
 		//console.log(population_density_data);
 		//setTimeout(function show_map(){	

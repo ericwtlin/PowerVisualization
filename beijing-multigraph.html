@@ -2,15 +2,16 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>人口密度与充电桩规划</title>
+    <title>北京市城市化与电动车保有量情况</title>
 </head>
 
 <body>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+	<div>
 	<table id="global" border="0">
 	<tr>
 		<td rowspan="2">
-			<div id="main" style="height:700px;width:700px; ")></div>
+			<div id="main" style="height:600px;width:600px; ")></div>
 		</td>
 		<td>
 			<div id="subgraph1" style="height:300px;width:400px; ")></div>
@@ -22,7 +23,19 @@
 		</td>
 		</td>
 	</tr>
+	</table>
 	</div>
+
+	<div style="clear:both">
+		<p></br>视图介绍</p>
+		<p>功能：</br>展示北京市城市化水平与近年电动车保有量、分布等信息</p>
+		<p>使用方法与说明：</br>1.行政区划图中的颜色深浅表示了城市化水平得分的高低，可以通过左下角的值域选择条来调整需要显示的值域范围。</p>
+		<p>2.行政区划图上覆盖的热力图表示电动车的分布。</p>
+		<p>3.点选某个区县，将在右部显示对应区县的城市化水平得分详情表(饼图)以及今年电动车保有量详情表(柱状图)</p>
+		<p>4.行政区划图右上角的缩放工具可以放大缩小、调整位置。</p>
+
+	</div>
+
 	
 
 	<!-- ECharts单文件引入 -->

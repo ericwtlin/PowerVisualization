@@ -1,10 +1,9 @@
-function GetOption(traffic_data){
+function GetTrafficOption(traffic_data){
 
 	option = {
-		color: ['gold','aqua','lime'],
+		//color: ['gold','aqua','lime'],
 		title : {
-			text: '交通情况',
-			subtext:'数据纯属虚构',
+			text: '北京市交通流量统计',
 			x:'right'
 		},
 		/*
