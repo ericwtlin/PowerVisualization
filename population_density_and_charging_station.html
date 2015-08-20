@@ -3,27 +3,49 @@
 <head>
     <meta charset="utf-8">
     <title>人口密度与充电桩规划</title>
+	<style>
+	#statistics {
+		border:1px solid #ccc;
+		//margin:2em auto 1em;
+		max-width:250px;
+		min-width:200px;
+		-moz-border-radius:10px;
+		-webkit-border-radius:10px;
+		border-radius:10px;
+	}
+	.statistics_info {
+		font-size:8px;		
+	}
+	</style>
 </head>
 
 <body>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="main" style="height:600px;width:600px; z-index:1;position:absolute;background-color:white; ")></div>
-	<!--<div id="main" style="height:1100px;width:1100px; float:left")></div>-->
-	<div id="statistics" style="z-index:2;position:absolute;background-color:white;top:30px;display:none">
+	<div style="height:600px;width:600px; float:left">
+		<div id="main" style="height:600px;width:600px; z-index:1;position:absolute;background-color:white; ")></div>
+		<div id="statistics" style="width: 250px;z-index:2;position:absolute;background-color:pink;top:40px;display:none">
+			<p class="statistics_info">当前选中的区域为:</p>
+			<p id="select_area" class="statistics_info"></p>
+			<p id="stations_count" class="statistics_info"></p>
+			<!--
 			<p>当前选中的区域是:</p>
 			<textarea id="SelectedArea" readonly="readonly" rows=3 cols=20/> </textarea>
 			<p>该区域中的充电桩统计信息:</p>
 			<textarea id="ChargingInfo" readonly="readonly" rows=5 cols=20/></textarea>
+			-->
+		</div>
 	</div>
+	<div id="station_info" style="height:600px;width:500px;float:left;"></div>
 
-	<div style="position: absolute; top:620px">
+	<div style="float:left; top:620px">
 		<p></br>视图介绍</p>
 		<p>功能：</br>展示北京市人口密度与充电站信息</p>
 		<p>使用方法与说明：</br>1.行政区划图中的颜色深浅表示了该区域人口密度的高低，可以通过左下角的值域选择条来调整需要显示的值域范围。</p>
 		<p>2.行政区划图上覆盖的热力图表示电动车的分布。</p>
-		<p>3.行政区划图上的灰色标注是充电桩信息，鼠标mouseover将显示该充电站的详情。</p>
+		<p>3.行政区划图上的灰色标注是充电桩信息，鼠标mouseover将显示该充电桩的类型等信息。</p>
 		<p>4.点选某个区县，将在左上角显示对应区县的充电桩统计详情，区县支持多选。</p>
-		<p>5.行政区划图右上角的缩放工具可以放大缩小、调整位置。</p>
+		<p>5.点选某个充电桩，将以仪表盘的形式显示该充电桩的参数信息。</p>
+		<p>6.行政区划图右上角的缩放工具可以放大缩小、调整位置。</p>
 
 	</div>
 
@@ -34,210 +56,119 @@
 	<!--<script type="text/javascript" src="libs/jquery.subscribe.js"></script>-->
 	
 	<script type="text/javascript" src="echarts-themes/green.js"></script>
+	<script type="text/javascript" src="population_density_and_charging_station\GetOption.js"></script>
+	<script type="text/javascript" src="population_density_and_charging_station\GetGaugeOption.js"></script>
 
 	<script type="text/javascript">
 		//加载json数据
-		var population_density_data, charging_stations_data, charging_stations_geoCoord, heat_data;
 		$.getJSON('population_density_and_charging_station/data.json',function(json){
-			population_density_data = json.data;
-			charging_stations_data = json.charging_stations_info;
-			charging_stations_geoCoord = json.charging_stations_geoCoord;
-			heat_data= json.heat_data;
+			data = json.data;
 			console.log("load json data finished");
+			show_map(data);
 			});
-	</script>
-
-	<script type="text/javascript">
-		//console.log(population_density_data);
-		//setTimeout(function show_map(){	
-				// 路径配置
-				require.config({
-					paths: {
-						echarts: 'echarts-master/build/dist',
-					}
-				});
-				
-				//alert(2);
 		
+		// 路径配置
+			require.config({
+				paths: {
+					echarts: 'echarts-master/build/dist',
+				}
+			});
+		
+
+		function show_map(data){		
+			console.log("show map begin");
+			require(
+				[
+					'echarts',
+					'echarts/chart/map', // 使用地图，按需加载
+				],
+				function (ec) {
+					// 基于准备好的dom，初始化echarts图表
+					var myChart = ec.init(document.getElementById('main'), theme); 
+		
+					GetOption(data);	//这里获取了option
+
+					// 为echarts对象加载数据 
+					myChart.setOption(option); 
+
+					console.log("show map finished");
+				
+				
+					var ecConfig = require('echarts/config');
+					//添加区域选中事件
+					myChart.on(ecConfig.EVENT.MAP_SELECTED, function (param){
+						//获取选中的区域
+						var selected = param.selected;		//param.selected = ｛"a": true, "b": undefined｝
+						var str = ""; 
 						
-				console.log("show map begin");
-				require(
-					[
-						'echarts',
-						'echarts/chart/map', // 使用地图，按需加载
-					],
-					function (ec) {
-						// 基于准备好的dom，初始化echarts图表
-						var myChart = ec.init(document.getElementById('main'), theme); 
-
-						option = {
-							title : {
-								text: '人口密度与充电站规划',
-								x:'center',
-								textStyle: {
-									fontSize: '20',
-								}
-							},
-							tooltip : {
-								trigger: 'item',
-								formatter: function (params,ticket,callback) {
-									//console.log(params);
-									
-									if(params[5].type == null || params[5].type == undefined){	//说明是地区区块
-										return params[5].name + "<br/>人口密度: " + params[5].value;
-										
-									}else{	//说明是markPoint
-										return params[5].name + "<br/>类别: " + params[5].type + "<br/>功率: " + params[5].power + "<br/>电压: " + params[5].voltage;
+						for (var p in selected) {
+							if (selected[p]) {
+								str += p + ' ';
+							}
+						}
+						if(str != ""){
+							document.getElementById("statistics").style.display = "block";	//若有选中，则显示该统计信息的div
+							document.getElementById("select_area").textContent = str;
+						
+							//获取选中区域内的充电站信息
+							var count_A = 0;
+							var count_B = 0;
+							for(var i = 0; i < data.charging_stations_info.length; i ++){
+								if(selected[data.charging_stations_info[i].location]){
+									if(data.charging_stations_info[i].type == "A类"){
+										count_A ++;
+									}else if (data.charging_stations_info[i].type == "B类"){
+										count_B ++;
 									}
-								}
-							},
-							/*
-							legend: {
-								orient: 'vertical',
-								x:'left',
-								data:['iphone3','iphone4','iphone5']
-							},
-							*/
-							dataRange: {
-								min: 0,
-								max: 2500,
-								x: 'left',
-								y: 'bottom',
-								text:['高','低'],           // 文本，默认为数值文本
-								calculable : true
-							},
-							toolbox: {
-								show: true,
-								orient : 'vertical',
-								x: 'right',
-								y: 'center',
-								feature : {
-									mark : {show: true},
-									dataView : {show: true, readOnly: false},
-									restore : {show: true},
-									saveAsImage : {show: true}
-								}
-							},
-							roamController: {
-								show: true,
-								x: 'right',
-								mapTypeControl: {
-									'北京': true
-								}
-							},
-							series : [
-								{
-									name: 'charging station plan',
-									type: 'map',
-									mapType: '北京',
-									roam: false,
-									selectedMode:  'multiple',
-									itemStyle:{
-										normal:{label:{show:true}},	//未mouseover的情况下是否显示label
-										emphasis:{label:{show:true}} 	//mouseover的情况下是否显示label
-									},
-									data:population_density_data,
-									markPoint:{
-										symbolSize: 10,
-										//large: true,
-										itemStyle: {
-											normal: {
-												borderColor: '87cefa',
-												borderWidth: 1,
-												label: {
-													show:false,
-													
-													formatter: function (params,ticket,callback) {//格式化展现（标签+值）
-														return params.name + params.value;
-														//return params.value + params.name;
-													}  
-												}
-											},
-											emphasis: {
-												borderColor: '1e90ff',
-												borderWidth: 5,
-												label: {
-													show: false,
-													formatter: function (params,ticket,callback) {//格式化展现（标签+值）
-														return params.name + params.value;
-														//return params.value + params.name;
-													}  
-												}
-											}
-										},
-										data: charging_stations_data,
-										
-									},
-									geoCoord : charging_stations_geoCoord,
-									heatmap: {
-										blurSize: 30,
-										gradientColors: ['blue', 'cyan', 'lime', 'yellow', 'red'],
-										minAlpha: 0.1,
-										valueScale: 1,
-										opacity: 1,
-									 	data: heat_data
-
-									}
-								}
-							]	
-							
-						};
-							
-				  
-
-
-						// 为echarts对象加载数据 
-						myChart.setOption(option); 
-
-						console.log("show map finished");
-					
-					
-						var ecConfig = require('echarts/config');
-						myChart.on(ecConfig.EVENT.MAP_SELECTED, function (param){
-							//获取选中的区域
-							var selected = param.selected;		//param.selected = ｛"a": true, "b": undefined｝
-							var str = ""; 
-							
-							for (var p in selected) {
-								if (selected[p]) {
-									str += p + ' ';
 								}
 							}
-							if(str != ""){
-								document.getElementById("statistics").style.display = "block";	//若有选中，则显示该统计信息的div
-								document.getElementById("SelectedArea").value = str;
-								//console.log(str);
-							
-								//获取选中区域内的充电站信息
-								var count_A = 0;
-								var count_B = 0;
-								for(var i = 0; i < charging_stations_data.length; i ++){
-									if(selected[charging_stations_data[i].location]){
-										if(charging_stations_data[i].type == "A类"){
-											count_A ++;
-										}else if (charging_stations_data[i].type == "B类"){
-											count_B ++;
-										}
-									}
-								}
-								/** 格式化输入字符串**/
-								//用法: "hello{0}".format('world')；返回'hello world'
-								String.prototype.format= function(){
-									var args = arguments;
-									return this.replace(/\{(\d+)\}/g,function(s,i){
-									return args[i];
-									});
-								}
-								document.getElementById("ChargingInfo").value = "A类充电站共有{0}个\nB类充电站共有{1}个".format(count_A, count_B);
-							}else{
-								document.getElementById("statistics").style.display = "none";	//若无选中，则隐藏该统计信息的DIV
-
+							/** 格式化输入字符串**/
+							//用法: "hello{0}".format('world')；返回'hello world'
+							String.prototype.format= function(){
+								var args = arguments;
+								return this.replace(/\{(\d+)\}/g,function(s,i){
+								return args[i];
+								});
 							}
+							document.getElementById("stations_count").textContent = "其中，A类充电站共有{0}个，B类充电站共有{1}个".format(count_A, count_B);
+						}else{
+							document.getElementById("statistics").style.display = "none";	//若无选中，则隐藏该统计信息的DIV
+
+						}
 
 
 
-						})
 					});
+
+					//添加markPoint点击事件
+					myChart.on(ecConfig.EVENT.CLICK, function (params){
+						if (params.data.item_type == "charging_station"){
+							show_station_info(params.data.power, params.data.voltage);
+						}
+						//console.log(params);
+					});
+				}
+			);
+		}
+	
+		function show_station_info(power, voltage){
+			require(
+				[
+					'echarts',
+					'echarts/chart/gauge', // 使用地图，按需加载
+				],
+				function (ec) {
+					// 基于准备好的dom，初始化echarts图表
+					var stationInfoChart = ec.init(document.getElementById('station_info'), theme); 
+		
+					GetGaugeOption(power, voltage);	//这里获取了仪表盘gauge_option
+
+					// 为echarts对象加载数据 
+					stationInfoChart.setOption(gauge_option); 
+				}
+			);
+
+		}
 		
     </script>
 	
